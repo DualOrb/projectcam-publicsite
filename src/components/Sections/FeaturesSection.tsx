@@ -179,10 +179,10 @@ const FeaturesSection = () => {
               </p>
             </div>
             <button
-              onClick={() => scrollToElement('demo')}
+              onClick={() => scrollToElement('signup')}
               className="btn-primary btn-lg whitespace-nowrap"
             >
-              Watch Demo
+              Get Early Access
             </button>
           </div>
         </motion.div>

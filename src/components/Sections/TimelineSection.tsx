@@ -106,7 +106,7 @@ const TimelineSection = () => {
                       className="relative flex items-start"
                     >
                       {/* Icon */}
-                      <div className={`relative z-10 w-16 h-16 rounded-full flex items-center justify-center ${colorClasses} border-4 border-white shadow-lg`}>
+                      <div className={`relative z-20 w-16 h-16 rounded-full flex items-center justify-center ${colorClasses} border-4 border-white shadow-lg`}>
                         <IconComponent className="w-6 h-6" />
                       </div>
 
@@ -178,7 +178,10 @@ const TimelineSection = () => {
                 >
                   Get Launch Notifications
                 </button>
-                <button className="btn-outline btn-lg">
+                <button 
+                  onClick={() => scrollToElement('signup')}
+                  className="btn-outline btn-lg"
+                >
                   Request Beta Access
                 </button>
               </div>

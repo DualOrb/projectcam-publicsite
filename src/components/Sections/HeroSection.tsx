@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Play, Camera, Brain, Users, MapPin, Mic, Volume2, Image, Zap, MessageSquare, Navigation, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, Play, Camera, Brain, Users, MapPin, Mic, Volume2, Image, Zap, MessageSquare, Navigation, ChevronRight, ArrowLeft, Plus, Clock, FileText, Settings, Search, Filter } from 'lucide-react'
 import EmailSignupForm from '@/components/UI/EmailSignupForm'
 import Button from '@/components/UI/Button'
 import { scrollToElement } from '@/utils/helpers'
@@ -8,6 +8,334 @@ import { scrollToElement } from '@/utils/helpers'
 const HeroSection = () => {
   const [activeFeature, setActiveFeature] = useState(0)
   const [isRecording, setIsRecording] = useState(false)
+  const [currentPage, setCurrentPage] = useState('home')
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  const projects = [
+    { id: 1, name: 'Kitchen Renovation', client: 'Smith Family', progress: 75, photos: 24, notes: 8, lastUpdate: '2 hours ago' },
+    { id: 2, name: 'Bathroom Remodel', client: 'Johnson Home', progress: 45, photos: 18, notes: 12, lastUpdate: '1 day ago' },
+    { id: 3, name: 'Deck Installation', client: 'Miller Property', progress: 90, photos: 32, notes: 6, lastUpdate: '3 hours ago' }
+  ]
+
+  const recentPhotos = [
+    { id: 1, title: 'Before - Kitchen Demo', time: '2h ago', project: 'Kitchen Renovation' },
+    { id: 2, title: 'Electrical Rough-in', time: '4h ago', project: 'Bathroom Remodel' },
+    { id: 3, title: 'Foundation Check', time: '1d ago', project: 'Deck Installation' },
+    { id: 4, title: 'Tile Progress', time: '2d ago', project: 'Bathroom Remodel' }
+  ]
+
+  const voiceNotes = [
+    { id: 1, title: 'Client requested cabinet change', duration: '1:24', project: 'Kitchen Renovation', time: '1h ago' },
+    { id: 2, title: 'Electrical inspection notes', duration: '0:45', project: 'Bathroom Remodel', time: '3h ago' },
+    { id: 3, title: 'Material delivery reminder', duration: '0:32', project: 'Deck Installation', time: '5h ago' }
+  ]
+
+  const navigateToPage = (page, data = null) => {
+    setCurrentPage(page)
+    if (data) setSelectedProject(data)
+  }
+
+  const goBack = () => {
+    setCurrentPage('home')
+    setSelectedProject(null)
+  }
+
+  const renderHomePage = () => (
+    <div className="px-6 py-4 space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-gray-800">Project Cam</h2>
+        <div className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center">
+          <Camera className="w-4 h-4 text-white" />
+        </div>
+      </div>
+      
+      {/* Feature Cards */}
+      <div className="space-y-4">
+        {[
+          { icon: Volume2, title: 'Voice Notes', count: '3 active', color: 'bg-purple-500', description: 'Record voice memos instantly', page: 'voice' },
+          { icon: Image, title: 'Photos', count: '127 captured', color: 'bg-blue-500', description: 'Capture and organize job photos', page: 'photos' },
+          { icon: Zap, title: 'AI Reports', count: '12 generated', color: 'bg-brand-orange', description: 'Auto-generate project reports', page: 'reports' }
+        ].map((item, index) => {
+          const IconComponent = item.icon
+          const isActive = activeFeature === index
+          return (
+            <motion.button
+              key={item.title}
+              className={`w-full flex items-center p-4 rounded-2xl shadow-sm border transition-all duration-300 text-left ${
+                isActive 
+                  ? 'bg-gradient-to-r from-orange-50 to-red-50 border-brand-orange shadow-md' 
+                  : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-md'
+              }`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1 + index * 0.2 }}
+              onClick={() => {
+                setActiveFeature(index)
+                navigateToPage(item.page)
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className={`w-10 h-10 ${item.color} rounded-xl flex items-center justify-center mr-4 ${
+                isActive ? 'shadow-lg' : ''
+              }`}>
+                <IconComponent className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1">
+                <div className="font-semibold text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500">{isActive ? item.description : item.count}</div>
+              </div>
+              <ChevronRight className={`w-4 h-4 transition-transform ${
+                isActive ? 'text-brand-orange rotate-90' : 'text-gray-400'
+              }`} />
+            </motion.button>
+          )
+        })}
+      </div>
+      
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 gap-3 pt-4">
+        <motion.button 
+          className={`p-4 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center ${
+            isRecording 
+              ? 'bg-red-500 text-white' 
+              : 'bg-brand-orange text-white hover:bg-orange-600'
+          }`}
+          onClick={() => setIsRecording(!isRecording)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isRecording ? (
+            <>
+              <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+              Recording...
+            </>
+          ) : (
+            <>
+              <Mic className="w-4 h-4 mr-2" />
+              Start Recording
+            </>
+          )}
+        </motion.button>
+        <motion.button 
+          className="border border-gray-200 text-gray-700 p-4 rounded-xl text-sm font-semibold hover:border-gray-300 hover:bg-gray-50 transition-all duration-300"
+          onClick={() => navigateToPage('projects')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          View Projects
+        </motion.button>
+      </div>
+    </div>
+  )
+
+  const renderProjectsPage = () => (
+    <div className="px-6 py-4 space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <button onClick={goBack} className="mr-3 p-1">
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <h2 className="text-xl font-bold text-gray-800">Projects</h2>
+        </div>
+        <button className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center">
+          <Plus className="w-4 h-4 text-white" />
+        </button>
+      </div>
+      
+      {/* Project List */}
+      <div className="space-y-3">
+        {projects.map((project) => (
+          <motion.button
+            key={project.id}
+            className="w-full bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all text-left"
+            onClick={() => navigateToPage('project-detail', project)}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="font-semibold text-gray-800 text-sm">{project.name}</h3>
+              <span className="text-xs text-gray-500">{project.lastUpdate}</span>
+            </div>
+            <p className="text-xs text-gray-600 mb-3">{project.client}</p>
+            <div className="flex items-center justify-between">
+              <div className="flex space-x-4 text-xs text-gray-500">
+                <span>{project.photos} photos</span>
+                <span>{project.notes} notes</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-16 bg-gray-200 rounded-full h-1.5 mr-2">
+                  <div 
+                    className="bg-brand-orange h-1.5 rounded-full transition-all" 
+                    style={{ width: `${project.progress}%` }}
+                  ></div>
+                </div>
+                <span className="text-xs text-gray-500">{project.progress}%</span>
+              </div>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  )
+
+  const renderPhotosPage = () => (
+    <div className="px-6 py-4 space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <button onClick={goBack} className="mr-3 p-1">
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <h2 className="text-xl font-bold text-gray-800">Photos</h2>
+        </div>
+        <div className="flex space-x-2">
+          <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <Search className="w-4 h-4 text-gray-600" />
+          </button>
+          <button className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center">
+            <Camera className="w-4 h-4 text-white" />
+          </button>
+        </div>
+      </div>
+      
+      {/* Recent Photos */}
+      <div className="space-y-3">
+        <h3 className="font-semibold text-gray-800 text-sm">Recent Photos</h3>
+        {recentPhotos.map((photo) => (
+          <motion.div
+            key={photo.id}
+            className="flex items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="w-12 h-12 bg-gray-200 rounded-lg mr-3 flex items-center justify-center">
+              <Image className="w-5 h-5 text-gray-500" />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-gray-800 text-sm">{photo.title}</div>
+              <div className="text-xs text-gray-500">{photo.project} • {photo.time}</div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+
+  const renderVoicePage = () => (
+    <div className="px-6 py-4 space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <button onClick={goBack} className="mr-3 p-1">
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <h2 className="text-xl font-bold text-gray-800">Voice Notes</h2>
+        </div>
+        <button 
+          className={`w-8 h-8 rounded-full flex items-center justify-center ${
+            isRecording ? 'bg-red-500' : 'bg-brand-orange'
+          }`}
+          onClick={() => setIsRecording(!isRecording)}
+        >
+          <Mic className="w-4 h-4 text-white" />
+        </button>
+      </div>
+      
+      {/* Voice Notes List */}
+      <div className="space-y-3">
+        {voiceNotes.map((note) => (
+          <motion.div
+            key={note.id}
+            className="flex items-center p-4 bg-white rounded-xl border border-gray-100 shadow-sm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="w-10 h-10 bg-purple-500 rounded-xl mr-3 flex items-center justify-center">
+              <Volume2 className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-gray-800 text-sm">{note.title}</div>
+              <div className="text-xs text-gray-500">{note.project} • {note.time}</div>
+            </div>
+            <div className="text-right">
+              <div className="text-xs text-gray-500">{note.duration}</div>
+              <button className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center mt-1">
+                <Play className="w-3 h-3 text-gray-600" />
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+
+  const renderReportsPage = () => (
+    <div className="px-6 py-4 space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <button onClick={goBack} className="mr-3 p-1">
+            <ArrowLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <h2 className="text-xl font-bold text-gray-800">AI Reports</h2>
+        </div>
+        <button className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center">
+          <Plus className="w-4 h-4 text-white" />
+        </button>
+      </div>
+      
+      {/* Reports List */}
+      <div className="space-y-3">
+        {[
+          { title: 'Weekly Progress Report', project: 'Kitchen Renovation', date: 'Mar 15, 2026', status: 'Ready' },
+          { title: 'Safety Inspection Report', project: 'Bathroom Remodel', date: 'Mar 14, 2026', status: 'Generating...' },
+          { title: 'Material Usage Report', project: 'Deck Installation', date: 'Mar 13, 2026', status: 'Ready' }
+        ].map((report, index) => (
+          <motion.div
+            key={index}
+            className="flex items-center p-4 bg-white rounded-xl border border-gray-100 shadow-sm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="w-10 h-10 bg-brand-orange rounded-xl mr-3 flex items-center justify-center">
+              <FileText className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="font-semibold text-gray-800 text-sm">{report.title}</div>
+              <div className="text-xs text-gray-500">{report.project} • {report.date}</div>
+            </div>
+            <div className="text-right">
+              <span className={`text-xs px-2 py-1 rounded-full ${
+                report.status === 'Ready' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+              }`}>
+                {report.status}
+              </span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case 'projects':
+        return renderProjectsPage()
+      case 'photos':
+        return renderPhotosPage()
+      case 'voice':
+        return renderVoicePage()
+      case 'reports':
+        return renderReportsPage()
+      default:
+        return renderHomePage()
+    }
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -208,90 +536,17 @@ const HeroSection = () => {
                   </div>
                   
                   {/* App Content */}
-                  <div className="px-6 py-4 space-y-6">
-                    {/* Header */}
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-bold text-gray-800">Project Cam</h2>
-                      <div className="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center">
-                        <Camera className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                    
-                    {/* Feature Cards */}
-                    <div className="space-y-4">
-                      {[
-                        { icon: Volume2, title: 'Voice Notes', count: '3 active', color: 'bg-purple-500', description: 'Record voice memos instantly' },
-                        { icon: Image, title: 'Photos', count: '127 captured', color: 'bg-blue-500', description: 'Capture and organize job photos' },
-                        { icon: Zap, title: 'AI Reports', count: '12 generated', color: 'bg-brand-orange', description: 'Auto-generate project reports' }
-                      ].map((item, index) => {
-                        const IconComponent = item.icon
-                        const isActive = activeFeature === index
-                        return (
-                          <motion.button
-                            key={item.title}
-                            className={`w-full flex items-center p-4 rounded-2xl shadow-sm border transition-all duration-300 text-left ${
-                              isActive 
-                                ? 'bg-gradient-to-r from-orange-50 to-red-50 border-brand-orange shadow-md' 
-                                : 'bg-white border-gray-100 hover:border-gray-200 hover:shadow-md'
-                            }`}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1 + index * 0.2 }}
-                            onClick={() => setActiveFeature(index)}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            <div className={`w-10 h-10 ${item.color} rounded-xl flex items-center justify-center mr-4 ${
-                              isActive ? 'shadow-lg' : ''
-                            }`}>
-                              <IconComponent className="w-5 h-5 text-white" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-semibold text-gray-800 text-sm">{item.title}</div>
-                              <div className="text-xs text-gray-500">{isActive ? item.description : item.count}</div>
-                            </div>
-                            <ChevronRight className={`w-4 h-4 transition-transform ${
-                              isActive ? 'text-brand-orange rotate-90' : 'text-gray-400'
-                            }`} />
-                          </motion.button>
-                        )
-                      })}
-                    </div>
-                    
-                    {/* Quick Actions */}
-                    <div className="grid grid-cols-2 gap-3 pt-4">
-                      <motion.button 
-                        className={`p-4 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center ${
-                          isRecording 
-                            ? 'bg-red-500 text-white' 
-                            : 'bg-brand-orange text-white hover:bg-orange-600'
-                        }`}
-                        onClick={() => setIsRecording(!isRecording)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {isRecording ? (
-                          <>
-                            <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
-                            Recording...
-                          </>
-                        ) : (
-                          <>
-                            <Mic className="w-4 h-4 mr-2" />
-                            Start Recording
-                          </>
-                        )}
-                      </motion.button>
-                      <motion.button 
-                        className="border border-gray-200 text-gray-700 p-4 rounded-xl text-sm font-semibold hover:border-gray-300 hover:bg-gray-50 transition-all duration-300"
-                        onClick={() => scrollToElement('features')}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        View Features
-                      </motion.button>
-                    </div>
-                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentPage}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {renderCurrentPage()}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
                 
                 {/* Phone Details */}
