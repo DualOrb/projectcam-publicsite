@@ -1,0 +1,12 @@
+<svg width="160" height="28" viewBox="0 0 160 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon -->
+  <circle cx="14" cy="14" r="12" fill="#FF6B35"/>
+  <circle cx="14" cy="14" r="6" fill="rgba(26,26,26,0.2)"/>
+  <circle cx="14" cy="14" r="3" fill="#1a1a1a"/>
+  <circle cx="14" cy="14" r="1.5" fill="#FF6B35"/>
+  
+  <!-- Text -->
+  <text x="36" y="19" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="700" fill="#1a1a1a" letter-spacing="-0.01em">
+    ProjectCam
+  </text>
+</svg>

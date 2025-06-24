@@ -1,0 +1,78 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main Icon Background -->
+  <g transform="translate(5, 5)">
+    <!-- Outer Ring -->
+    <circle cx="25" cy="25" r="23" fill="url(#outerGradient)" opacity="0.1"/>
+    <!-- Main Circle -->
+    <circle cx="25" cy="25" r="20" fill="url(#mainGradient)" stroke="url(#borderGradient)" stroke-width="2"/>
+    
+    <!-- Camera Icon -->
+    <g transform="translate(15, 15)">
+      <!-- Camera Body -->
+      <rect x="2" y="6" width="16" height="10" rx="2.5" fill="white" opacity="0.95"/>
+      <!-- Camera Top -->
+      <rect x="5" y="4" width="6" height="3" rx="1" fill="white" opacity="0.8"/>
+      <!-- Camera Lens Outer -->
+      <circle cx="10" cy="11" r="4.5" fill="white" stroke="#FF6B35" stroke-width="2"/>
+      <!-- Camera Lens Inner -->
+      <circle cx="10" cy="11" r="2.5" fill="#FF6B35"/>
+      <!-- Camera Lens Center -->
+      <circle cx="10" cy="11" r="1" fill="white" opacity="0.9"/>
+      <!-- Camera Flash -->
+      <rect x="4" y="2" width="2.5" height="1.5" rx="0.5" fill="white" opacity="0.9"/>
+      <!-- Viewfinder -->
+      <rect x="14" y="7" width="1.5" height="1.5" rx="0.3" fill="white" opacity="0.7"/>
+      
+      <!-- Voice/Sound Waves -->
+      <g transform="translate(18, 8)">
+        <path d="M0 3 Q2 5 0 7" stroke="white" stroke-width="1.8" fill="none" opacity="0.8" stroke-linecap="round"/>
+        <path d="M2 2 Q5 5 2 8" stroke="white" stroke-width="1.8" fill="none" opacity="0.6" stroke-linecap="round"/>
+        <path d="M4 1 Q8 5 4 9" stroke="white" stroke-width="1.8" fill="none" opacity="0.4" stroke-linecap="round"/>
+      </g>
+    </g>
+    
+    <!-- Tech Elements -->
+    <circle cx="8" cy="12" r="1.5" fill="url(#accentGradient)" opacity="0.7"/>
+    <circle cx="42" cy="35" r="1" fill="url(#accentGradient)" opacity="0.5"/>
+    <rect x="38" y="8" width="2" height="2" rx="0.5" fill="url(#accentGradient)" opacity="0.6" transform="rotate(45 39 9)"/>
+  </g>
+  
+  <!-- Company Text -->
+  <g transform="translate(70, 12)">
+    <!-- Project -->
+    <text x="0" y="18" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#1a1a1a" letter-spacing="-0.5px">
+      Project
+    </text>
+    <!-- Cam -->
+    <text x="0" y="40" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#FF6B35" letter-spacing="-0.5px">
+      Cam
+    </text>
+    <!-- Tagline -->
+    <text x="85" y="32" font-family="Inter, system-ui, sans-serif" font-size="9" font-weight="500" fill="#666" opacity="0.8" letter-spacing="0.5px">
+      FOR CONTRACTORS
+    </text>
+  </g>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#FF7A47;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#FF5722;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E64100;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="outerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF4500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="borderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB800;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#FF6B35;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#D84315;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4FC3F7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#29B6F6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

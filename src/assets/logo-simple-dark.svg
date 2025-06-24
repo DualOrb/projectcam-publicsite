@@ -1,0 +1,17 @@
+<svg width="160" height="32" viewBox="0 0 160 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Camera Icon -->
+  <g transform="translate(0, 4)">
+    <rect x="0" y="0" width="24" height="24" rx="6" fill="#FF6B35"/>
+    <g transform="translate(6, 6)">
+      <rect x="1" y="3" width="10" height="6" rx="1" fill="#1a1a1a" opacity="0.8"/>
+      <circle cx="6" cy="6" r="2.5" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1"/>
+      <circle cx="6" cy="6" r="1" fill="#FF6B35"/>
+      <rect x="2" y="1" width="1" height="1" rx="0.5" fill="#1a1a1a" opacity="0.6"/>
+    </g>
+  </g>
+  
+  <!-- Text -->
+  <text x="32" y="20" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="700" fill="#1a1a1a" letter-spacing="-0.01em">
+    ProjectCam
+  </text>
+</svg>

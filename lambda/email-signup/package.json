@@ -1,0 +1,22 @@
+{
+  "name": "email-signup-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for Project Cam email signup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.450.0",
+    "@aws-sdk/lib-dynamodb": "^3.450.0"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "dynamodb",
+    "email",
+    "signup"
+  ],
+  "author": "Project Cam Team",
+  "license": "MIT"
+}

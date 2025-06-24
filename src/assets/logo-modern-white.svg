@@ -1,0 +1,39 @@
+<svg width="140" height="36" viewBox="0 0 140 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon Container -->
+  <g transform="translate(0, 0)">
+    <!-- Background Shape -->
+    <rect x="0" y="0" width="36" height="36" rx="12" fill="url(#modernGradientWhite)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    
+    <!-- Camera Lens -->
+    <circle cx="18" cy="18" r="8" fill="rgba(0,0,0,0.1)" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+    <circle cx="18" cy="18" r="5" fill="rgba(0,0,0,0.15)" stroke="#FF6B35" stroke-width="2"/>
+    <circle cx="18" cy="18" r="2" fill="#FF6B35"/>
+    
+    <!-- Tech Elements -->
+    <rect x="8" y="8" width="2" height="2" rx="1" fill="rgba(0,0,0,0.2)"/>
+    <rect x="26" y="26" width="2" height="2" rx="1" fill="rgba(0,0,0,0.15)"/>
+    <rect x="28" y="8" width="1" height="4" rx="0.5" fill="rgba(255,107,53,0.8)"/>
+    <rect x="7" y="26" width="4" height="1" rx="0.5" fill="rgba(255,107,53,0.6)"/>
+  </g>
+  
+  <!-- Company Text -->
+  <g transform="translate(48, 4)">
+    <!-- Project Cam -->
+    <text x="0" y="20" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.02em">
+      ProjectCam
+    </text>
+    <!-- Tagline -->
+    <text x="0" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="500" fill="white" opacity="0.7" letter-spacing="0.1em">
+      CONTRACTOR TOOLS
+    </text>
+  </g>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="modernGradientWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.9);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:rgba(255,255,255,0.8);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0.7);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

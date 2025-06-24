@@ -1,0 +1,30 @@
+<svg width="180" height="32" viewBox="0 0 180 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon -->
+  <g transform="translate(0, 4)">
+    <!-- Icon Background -->
+    <rect x="0" y="0" width="24" height="24" rx="6" fill="#FF6B35"/>
+    
+    <!-- Camera Icon -->
+    <g transform="translate(6, 6)">
+      <!-- Camera Body -->
+      <rect x="1" y="3" width="10" height="6" rx="1" fill="white" opacity="0.9"/>
+      <!-- Lens -->
+      <circle cx="6" cy="6" r="2.5" fill="white" stroke="#FF6B35" stroke-width="1"/>
+      <circle cx="6" cy="6" r="1" fill="#FF6B35"/>
+      <!-- Flash -->
+      <rect x="2" y="1" width="1" height="1" rx="0.5" fill="white" opacity="0.8"/>
+    </g>
+  </g>
+  
+  <!-- Text -->
+  <g transform="translate(36, 8)">
+    <!-- Main Text -->
+    <text x="0" y="12" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="-0.02em">
+      Project<tspan fill="#FF6B35">Cam</tspan>
+    </text>
+    <!-- Subtitle -->
+    <text x="0" y="22" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="8" font-weight="500" fill="rgba(255,255,255,0.7)" letter-spacing="0.1em">
+      FOR CONTRACTORS
+    </text>
+  </g>
+</svg>

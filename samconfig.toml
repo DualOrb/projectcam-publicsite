@@ -1,0 +1,35 @@
+# SAM CLI configuration file
+version = 0.1
+
+[default]
+[default.global.parameters]
+stack_name = "projectcam-launch-site"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+s3_prefix = "projectcam-launch-site"
+region = "us-east-1"  # Required for CloudFront SSL certificates
+parameter_overrides = [
+    "Environment=prod",
+    "DomainName=project-cam.com",
+    # Update with your actual certificate ARN
+    "CertificateArn=arn:aws:acm:us-east-1:ACCOUNT_ID:certificate/CERTIFICATE_ID"
+]
+
+[default.package.parameters]
+resolve_s3 = true
+
+[default.sync.parameters]
+watch = true
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"
