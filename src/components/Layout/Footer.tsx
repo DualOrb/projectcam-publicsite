@@ -10,6 +10,7 @@ const Footer = () => {
   const quickLinks = [
     { label: 'Features', sectionId: 'features' },
     { label: 'How It Works', sectionId: 'how-it-works' },
+    { label: 'Web Portal', sectionId: 'web-portal' },
     { label: 'Enterprise', sectionId: 'enterprise' },
     { label: 'Timeline', sectionId: 'timeline' },
     { label: 'Early Access', sectionId: 'signup' },

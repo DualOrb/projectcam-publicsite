@@ -1,0 +1,51 @@
+User-agent: *
+Allow: /
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://project-cam.com/sitemap.xml
+
+# Block access to sensitive areas (if any in future)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /dist/
+Disallow: /node_modules/
+
+# Allow specific important files
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /og-image.jpg
+Allow: /app-screenshot.jpg
+Allow: /logo.png
+
+# Search engine specific instructions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Block common bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
