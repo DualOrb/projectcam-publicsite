@@ -3,7 +3,7 @@ version = 0.1
 
 [default]
 [default.global.parameters]
-stack_name = "projectcam-launch-site"
+stack_name = "projectcam-simple-site"
 
 [default.build.parameters]
 cached = true
@@ -15,12 +15,7 @@ confirm_changeset = true
 resolve_s3 = true
 s3_prefix = "projectcam-launch-site"
 region = "us-east-1"  # Required for CloudFront SSL certificates
-parameter_overrides = [
-    "Environment=prod",
-    "DomainName=project-cam.com",
-    # Update with your actual certificate ARN
-    "CertificateArn=arn:aws:acm:us-east-1:ACCOUNT_ID:certificate/CERTIFICATE_ID"
-]
+parameter_overrides = "Environment=\"prod\" DomainName=\"project-cam.com\" CertificateArn=\"arn:aws:acm:us-east-1:982534382519:certificate/3f78ec5c-a29c-4c6a-874f-1a56b57daca1\" NotificationEmail=\"nick@aitomator.ca\""
 
 [default.package.parameters]
 resolve_s3 = true

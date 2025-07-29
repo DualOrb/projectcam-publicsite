@@ -97,5 +97,56 @@ else
     echo -e "${RED}❌ CORS preflight test failed (HTTP $HTTP_CODE)${NC}"
 fi
 
+# Test 6: Contact Form - Valid Submission
+echo -e "${BLUE}📧 Testing contact form with valid data...${NC}"
+RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$API_BASE_URL/contact" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Test User","email":"test@example.com","company":"Test Corp","message":"This is a test message from the API test script.","subject":"API Test"}')
+
+HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+BODY=$(echo "$RESPONSE" | head -n -1)
+
+if [ "$HTTP_CODE" -eq 200 ]; then
+    echo -e "${GREEN}✅ Contact form test passed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $(echo $BODY | jq -r '.message' 2>/dev/null || echo $BODY)"
+else
+    echo -e "${RED}❌ Contact form test failed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $BODY"
+fi
+
+# Test 7: Contact Form - Invalid Email
+echo -e "${BLUE}📧 Testing contact form with invalid email...${NC}"
+RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$API_BASE_URL/contact" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Test User","email":"invalid-email","message":"Test message"}')
+
+HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+BODY=$(echo "$RESPONSE" | head -n -1)
+
+if [ "$HTTP_CODE" -eq 400 ]; then
+    echo -e "${GREEN}✅ Contact form invalid email test passed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $(echo $BODY | jq -r '.message' 2>/dev/null || echo $BODY)"
+else
+    echo -e "${RED}❌ Contact form invalid email test failed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $BODY"
+fi
+
+# Test 8: Contact Form - Missing Required Fields
+echo -e "${BLUE}📧 Testing contact form with missing fields...${NC}"
+RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$API_BASE_URL/contact" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Test User"}')
+
+HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+BODY=$(echo "$RESPONSE" | head -n -1)
+
+if [ "$HTTP_CODE" -eq 400 ]; then
+    echo -e "${GREEN}✅ Contact form missing fields test passed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $(echo $BODY | jq -r '.message' 2>/dev/null || echo $BODY)"
+else
+    echo -e "${RED}❌ Contact form missing fields test failed (HTTP $HTTP_CODE)${NC}"
+    echo "   Response: $BODY"
+fi
+
 echo ""
 echo -e "${GREEN}🎉 API testing completed!${NC}"

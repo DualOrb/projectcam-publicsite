@@ -92,6 +92,8 @@ echo -e "${GREEN}✅ Build completed${NC}"
 echo -e "${BLUE}📦 Installing Lambda dependencies...${NC}"
 cd lambda/email-signup
 npm install --production
+cd ../contact-form
+npm install --production
 cd ../..
 
 # Deploy with SAM
@@ -103,6 +105,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Prompt for notification email
+read -p "Enter notification email for contact forms (default: contact@$DOMAIN_NAME): " NOTIFICATION_EMAIL
+NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL:-"contact@$DOMAIN_NAME"}
+
 sam deploy \
     --stack-name "$STACK_NAME" \
     --region "$REGION" \
@@ -111,6 +117,7 @@ sam deploy \
         "Environment=prod" \
         "DomainName=$DOMAIN_NAME" \
         "CertificateArn=$CERT_ARN" \
+        "NotificationEmail=$NOTIFICATION_EMAIL" \
     --confirm-changeset
 
 if [ $? -ne 0 ]; then

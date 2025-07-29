@@ -1,0 +1,21 @@
+{
+  "name": "contact-form-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for Project Cam contact form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.450.0"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "ses",
+    "contact",
+    "form"
+  ],
+  "author": "Project Cam Team",
+  "license": "MIT"
+}

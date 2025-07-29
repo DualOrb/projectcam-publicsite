@@ -161,7 +161,7 @@ const EnterpriseSection = () => {
 
                 <div className="text-center">
                   <p className="text-sm text-gray-400">
-                    Contact our enterprise team: <a href="mailto:enterprise@projectcam.com" className="text-brand-orange hover:text-brand-orange-light transition-colors duration-200">enterprise@projectcam.com</a>
+                    Contact our enterprise team: <a href="mailto:nick@nr-designs.ca" className="text-brand-orange hover:text-brand-orange-light transition-colors duration-200">nick@nr-designs.ca</a>
                   </p>
                 </div>
               </div>

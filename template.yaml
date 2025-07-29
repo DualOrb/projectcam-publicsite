@@ -13,6 +13,10 @@ Parameters:
   CertificateArn:
     Type: String
     Description: ACM Certificate ARN for the domain
+  NotificationEmail:
+    Type: String
+    Description: Email address to receive contact form submissions
+    Default: nick@nr-designs.ca
 
 Globals:
   Function:
@@ -23,6 +27,7 @@ Globals:
     Environment:
       Variables:
         CORS_ORIGIN: !Sub 'https://${DomainName}'
+        NOTIFICATION_EMAIL: !Ref NotificationEmail
 
 Resources:
   # DynamoDB Table for Email Subscribers
@@ -75,6 +80,31 @@ Resources:
             Path: /api/subscribe
             Method: post
 
+  # Lambda Function for Contact Form
+  ContactFormFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'projectcam-contact-form-${Environment}'
+      CodeUri: lambda/contact-form/
+      Handler: index.handler
+      Environment:
+        Variables:
+          NOTIFICATION_EMAIL: !Ref NotificationEmail
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: '*'
+      Events:
+        ContactFormApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ProjectCamApi
+            Path: /api/contact
+            Method: post
+
   # API Gateway
   ProjectCamApi:
     Type: AWS::Serverless::Api
@@ -85,11 +115,11 @@ Resources:
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: !Sub "'https://${DomainName}'"
         MaxAge: "'86400'"
-      Domain:
-        DomainName: !Sub 'api.${DomainName}'
-        CertificateArn: !Ref CertificateArn
-        Route53:
-          HostedZoneId: !Ref HostedZone
+      # Domain:
+      #   DomainName: !Sub 'api.${DomainName}'
+      #   CertificateArn: !Ref CertificateArn
+      #   Route53:
+      #     HostedZoneId: Z069883639LHEPF3Z4F6B
 
   # S3 Bucket for Static Website Hosting
   WebsiteBucket:
@@ -197,24 +227,19 @@ Resources:
             Principal:
               Service: cloudfront.amazonaws.com
             Action: s3:GetObject
-            Resource: !Sub '${WebsiteBucket}/*'
+            Resource: !Sub 'arn:aws:s3:::${WebsiteBucket}/*'
             Condition:
               StringEquals:
                 'AWS:SourceArn': !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}'
 
-  # Route 53 Hosted Zone (assuming it exists)
-  HostedZone:
-    Type: AWS::Route53::HostedZone
-    Properties:
-      Name: !Ref DomainName
-      HostedZoneConfig:
-        Comment: !Sub 'Hosted zone for ${DomainName}'
+  # Use existing hosted zone
+  # HostedZone already exists: Z069883639LHEPF3Z4F6B
 
   # Route 53 DNS Records
   DNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: !Ref HostedZone
+      HostedZoneId: Z069883639LHEPF3Z4F6B
       Name: !Ref DomainName
       Type: A
       AliasTarget:
@@ -224,7 +249,7 @@ Resources:
   WWWDNSRecord:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneId: !Ref HostedZone
+      HostedZoneId: Z069883639LHEPF3Z4F6B
       Name: !Sub 'www.${DomainName}'
       Type: A
       AliasTarget:

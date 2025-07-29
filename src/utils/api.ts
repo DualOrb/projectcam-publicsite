@@ -1,7 +1,7 @@
 import type { EmailSignupData, ApiResponse } from '@/types'
 
 const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://api.project-cam.com/api'
+  ? 'https://5kkn526el7.execute-api.us-east-1.amazonaws.com/prod/api'
   : 'http://localhost:3000/api'
 
 class ApiError extends Error {
@@ -51,6 +51,20 @@ export const api = {
   // Email signup
   subscribeEmail: async (data: EmailSignupData): Promise<ApiResponse> => {
     return apiRequest('/subscribe', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+
+  // Contact form
+  sendContactForm: async (data: { 
+    name: string; 
+    email: string; 
+    company?: string; 
+    message: string; 
+    subject?: string 
+  }): Promise<ApiResponse> => {
+    return apiRequest('/contact', {
       method: 'POST',
       body: JSON.stringify(data),
     })
